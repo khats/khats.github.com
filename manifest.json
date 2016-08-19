@@ -2,6 +2,11 @@
   "name": "AsianDate amazing Application",
   "short_name": "AsianDate App",
   "description": "Best dating site on the world",
+  "theme_color": "#772b28",
+  "background_color": "#772b28",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
   "prefer_related_applications": true,
   "related_applications": [
     {
@@ -57,10 +62,5 @@
       "type": "image/png",
       "density": 4
     }
-  ],
-  "theme_color": "#772b28",
-  "background_color": "#772b28",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "orientation": "portrait-primary"
+  ]
 }
