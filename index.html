@@ -7,6 +7,23 @@
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#772b28">
+  <script>
+    window.addEventListener('load', function() {
+      var outputElement = document.getElementById('output');
+      navigator.serviceWorker.register('service-worker.js', { scope: './' })
+              .then(function(r) {
+                console.log('registered service worker');
+              })
+              .catch(function(whut) {
+                console.error('uh oh... ');
+                console.error(whut);
+              });
+
+      window.addEventListener('beforeinstallprompt', function(e) {
+        outputElement.textContent = 'beforeinstallprompt Event fired';
+      });
+    });
+  </script>
 </head>
 <body style="background-color:#772b28;color: white;text-align: center;">
   <h3 style="padding-top: 50px;">
