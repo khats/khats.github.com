@@ -4,7 +4,8 @@
   "description": "Best dating site on the world",
   "related_applications": [
     {
-      "platform": "web"
+      "platform": "web",
+      "url": "http://m.asiandate.com"
     },
     {
       "platform": "play",
