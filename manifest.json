@@ -2,17 +2,17 @@
   "name": "AsianDate amazing Application",
   "short_name": "AsianDate App",
   "description": "Best dating site on the world",
+  "prefer_related_applications": true,
   "related_applications": [
     {
       "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.asiandate"
+      "url": "com.asiandate"
     },
     {
       "platform": "itunes",
-      "url": "https://www.ndate.eu/app-ios"
+      "url": "id1038892326"
     }
   ],
-  "prefer_related_applications": true,
   "icons": [
     {
       "src": "bannerImg.png",
