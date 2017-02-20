@@ -15,7 +15,9 @@ self.addEventListener('install', function(event) {
     );
 });
 
+console.log('add fetch subscriber');
 self.addEventListener('fetch', function(event) {
+    console.log('going fetch', event.request);
     event.respondWith(
         caches.match(event.request)
             .then(function(response) {
