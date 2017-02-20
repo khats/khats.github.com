@@ -12,13 +12,11 @@
       navigator.serviceWorker.register('service-worker.js', { scope: './' })
               .then(function(r) {
                 console.log('registered service worker');
-                setTimeout(function(){
-                  var node = document.createElement("link");
-                  node.rel = 'stylesheet';
-                  node.href='main.css';
-                  document.getElementsByTagName('head')[0].appendChild(node);
-                  document.getElementById('banner').src = 'bannerImg_1.png';
-                }, 3000);
+                var node = document.createElement("link");
+                node.rel = 'stylesheet';
+                node.href='main.css';
+                document.getElementsByTagName('head')[0].appendChild(node);
+                document.getElementById('banner').src = 'bannerImg_1.png';
 
               })
               .catch(function(whut) {
