@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/main.css">
   <meta name="theme-color" content="#772b28">
   <script>
     window.addEventListener('load', function() {
@@ -12,12 +13,6 @@
       navigator.serviceWorker.register('service-worker.js', { scope: './' })
               .then(function(r) {
                 console.log('registered service worker');
-                var node = document.createElement("link");
-                node.rel = 'stylesheet';
-                node.href='main.css';
-                document.getElementsByTagName('head')[0].appendChild(node);
-                document.getElementById('banner').src = 'bannerImg_1.png';
-
               })
               .catch(function(whut) {
                 console.error('uh oh... ');
@@ -34,7 +29,7 @@
   <h3>
     Welcome to Aleksei Khatsianovich home page
     <div id="output"></div>
-    <img id="banner"/>
+    <img src="bannerImg_1.png" id="banner"/>
   </h3>
 <script type="text/javascript">
 
