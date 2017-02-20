@@ -1,7 +1,6 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
-    '/bannerImg_1.png',
-    '/main.css'
+    '/fake.txt'
 ];
 
 self.addEventListener('install', function(event) {
