@@ -24,8 +24,8 @@
                       console.log('listener isSignedIn, already signined, token:', auth2.currentUser.get().getAuthResponse().id_token);
                   }
               });
-              auth2.currentUser.listen(function(){
-                  console.log('user changed');
+              auth2.currentUser.listen(function(user){
+                  console.log('user changed', user.getId());
               });
 
               // Sign in the user if they are currently signed in.
