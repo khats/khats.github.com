@@ -2,57 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script src="https://apis.google.com/js/api:client.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
   <script>
       var googleUser = {};
       var startApp = function() {
-          gapi.load('auth2', function(){
+          gapi.load('client:auth2', function(){
               // Retrieve the singleton for the GoogleAuth library and set up the client.
-              auth2 = gapi.auth2.init({
-                  client_id: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
+              gapi.client.init({
+                  clientId: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
                   cookiepolicy: 'single_host_origin',
+                  discoveryDocs: ["https://people.googleapis.com/$discovery/rest"],
                   // Request scopes in addition to 'profile' and 'email'
-                  scope: 'profile'});
+                  scope: 'profile email'})// https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me
+                  .then(function(){
+                      var auth2 = gapi.auth2.getAuthInstance();
+                      attachSignin(auth2, document.getElementById('customBtn'));
 
-              attachSignin(document.getElementById('customBtn'));
+                      auth2.isSignedIn.listen(function(val){
+                          console.log('listener isSignedIn', val);
+                          document.getElementById('sign-in-status').textContent = val;
+                          /*if(auth2.isSignedIn.get() == true){
+                              console.log('listener isSignedIn, already signined, token:', auth2.currentUser.get().getAuthResponse().id_token);
+                              gapi.client.people.people.get({
+                                  'resourceName': 'people/me',
+                                  'requestMask.includeField': 'person.names'
+                              }).then(function(response) {
+                                  console.log('Hello, ' + response.result.names[0].givenName);
+                              }, function(reason) {
+                                  console.log('Error: ' + reason.result.error.message);
+                              });
+                          }*/
+                      });
+                      auth2.currentUser.listen(function(user){
+                          console.log('user changed', user.getId());
+                      });
 
-              auth2.isSignedIn.listen(function(val){
-                  console.log('listener isSignedIn', val);
-                  document.getElementById('sign-in-status').textContent = val;
-                  if(auth2.isSignedIn.get() == true){
-                      console.log('listener isSignedIn, already signined, token:', auth2.currentUser.get().getAuthResponse().id_token);
-                  }
-              });
-              auth2.currentUser.listen(function(user){
-                  console.log('user changed', user.getId());
-              });
+                      // Sign in the user if they are currently signed in.
+                      if (gapi.auth2.getAuthInstance().isSignedIn.get() == true) {
+                          console.log('hot start sign in');
+                          /*auth2.signIn();*/
+                      }
 
-              // Sign in the user if they are currently signed in.
-              if (auth2.isSignedIn.get() == true) {
-                  console.log('hot start sign in');
-                  auth2.signIn();
-              }
-
-              document.getElementById('google-logout').onclick = function(){
-                  auth2.signOut().then(function(){
-                      console.log('sign out');
-                      document.getElementById('sign-in-status').textContent = 'manual sign out';
+                      document.getElementById('google-logout').onclick = function(){
+                          auth2.signOut().then(function(){
+                              console.log('sign out');
+                              document.getElementById('sign-in-status').textContent = 'manual sign out';
+                          });
+                      }
                   });
-              }
+
+
           });
       };
 
-      function attachSignin(element) {
+      function attachSignin(auth2, element) {
           console.log(element.id);
           auth2.attachClickHandler(element, {},
               function(googleUser) {
-                  auth2.currentUser.get().grant(new gapi.auth2.SigninOptionsBuilder(
-                  {'scope': 'profile https://www.googleapis.com/auth/plus.login'})).then( function(success){
+                  /*auth2.currentUser.get().grant(new gapi.auth2.SigninOptionsBuilder(
+                  {'scope': 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me'})).then( function(success){
                       console.log(JSON.stringify({message: "success", value: success}));
                   },
                   function(fail){
                       alert(JSON.stringify({message: "fail", value: fail}));
-                  });
+                  });*/
                   document.getElementById('name').innerText = "Signed in: " +
                       googleUser.getBasicProfile().getName();
               }, function(error) {
