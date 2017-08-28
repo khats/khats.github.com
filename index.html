@@ -1,45 +1,53 @@
-<!doctype  html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="stylesheet" href="/main.css">
-  <meta name="theme-color" content="#772b28">
+  <meta charset="UTF-8">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      var outputElement = document.getElementById('output');
-      navigator.serviceWorker.register('service-worker.js', { scope: './' })
-              .then(function(r) {
-                console.log('registered service worker');
-              })
-              .catch(function(whut) {
-                console.error('uh oh... ');
-                console.error(whut);
+      var googleUser = {};
+      var startApp = function() {
+          gapi.load('auth2', function(){
+              // Retrieve the singleton for the GoogleAuth library and set up the client.
+              auth2 = gapi.auth2.init({
+                  client_id: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
+                  cookiepolicy: 'single_host_origin',
+                  // Request scopes in addition to 'profile' and 'email'
+                  //scope: 'additional_scope'
               });
+              attachSignin(document.getElementById('customBtn'));
+          });
+      };
 
-      window.addEventListener('beforeinstallprompt', function(e) {
-        outputElement.textContent = 'beforeinstallprompt Event fired';
-      });
-    });
+      function attachSignin(element) {
+          console.log(element.id);
+          auth2.attachClickHandler(element, {},
+              function(googleUser) {
+                  document.getElementById('name').innerText = "Signed in: " +
+                      googleUser.getBasicProfile().getName();
+              }, function(error) {
+                  alert(JSON.stringify(error, undefined, 2));
+              });
+      }
   </script>
+  <style type="text/css">
+    #customBtn {
+      background:url('btn_google_signin_dark_normal_web.png') no-repeat;
+      display: inline-block;
+      width: 191px;
+      height:46px;
+    }
+  </style>
+  <title>Title</title>
 </head>
-<body style="text-align: center;">
-  <h3>
-    Welcome to Aleksei Khatsianovich home page
-    <div id="output"></div>
-    <object type="application/x-shockwave-flash" 
-  data="tangramone.swf" 
-  width="0" height="0">
-  <param name="movie" value="tangramone.swf" />
-  <param name="quality" value="high"/>
-</object>
-    <img src="bannerImg_1.png" id="banner"/>
-  </h3>
-  <div id="fake">fake div</div>
-<script type="text/javascript">
-
-</script>
+<body>
+<div class="google-button">
+  <div id="gSignInWrapper">
+    <span class="label">Sign in with:</span>
+    <div id="customBtn">
+    </div>
+  </div>
+  <div id="name"></div>
+  <script>startApp();</script>
+</div>
 </body>
 </html>
