@@ -14,7 +14,20 @@
                   // Request scopes in addition to 'profile' and 'email'
                   //scope: 'additional_scope'
               });
+
               attachSignin(document.getElementById('customBtn'));
+
+              document.getElementById('sign-in-status').innerText(auth2.isSignedIn.get());
+              auth2.attachClickHandler(document.getElementById('google-logout'), {},
+                  function(){
+                      auth2.signOut().then(function(){
+                          console.log('sign out');
+                      });
+                  }, function(error) {
+                      alert(JSON.stringify(error, undefined, 2));
+                  }
+
+              );
           });
       };
 
@@ -48,6 +61,11 @@
   </div>
   <div id="name"></div>
   <script>startApp();</script>
+  <div>
+    <span>Sign in status:</span>
+    <span class="sign-in-status"></span>
+  </div>
+  <button id="google-logout">logout</button>
 </div>
 </body>
 </html>
