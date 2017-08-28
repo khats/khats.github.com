@@ -17,7 +17,7 @@
 
               attachSignin(document.getElementById('customBtn'));
 
-              document.getElementById('sign-in-status').innerText = auth2.isSignedIn.get();
+              document.getElementById('sign-in-status').textContent = auth2.isSignedIn.get();
               auth2.attachClickHandler(document.getElementById('google-logout'), {},
                   function(){
                       auth2.signOut().then(function(){
