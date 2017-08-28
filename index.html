@@ -13,7 +13,7 @@
                   cookiepolicy: 'single_host_origin',
                   // Request scopes in addition to 'profile' and 'email'
                   scope: new gapi.auth2.SigninOptionsBuilder(
-                  {'scope': 'https://www.googleapis.com/auth/plus.login'})
+                  {'scope': 'profile https://www.googleapis.com/auth/plus.login'})
               });
 
               attachSignin(document.getElementById('customBtn'));
