@@ -12,9 +12,7 @@
                   client_id: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
                   cookiepolicy: 'single_host_origin',
                   // Request scopes in addition to 'profile' and 'email'
-                  scope: new gapi.auth2.SigninOptionsBuilder(
-                  {'scope': 'profile https://www.googleapis.com/auth/plus.login'})
-              });
+                  scope: 'profile'});
 
               attachSignin(document.getElementById('customBtn'));
 
@@ -48,6 +46,13 @@
           console.log(element.id);
           auth2.attachClickHandler(element, {},
               function(googleUser) {
+              googleUser.grant(new gapi.auth2.SigninOptionsBuilder(
+                  {'scope': 'profile https://www.googleapis.com/auth/plus.login'})).then( function(success){
+                      console.log(JSON.stringify({message: "success", value: success}));
+                  },
+                  function(fail){
+                      alert(JSON.stringify({message: "fail", value: fail}));
+                  });
                   document.getElementById('name').innerText = "Signed in: " +
                       googleUser.getBasicProfile().getName();
               }, function(error) {
