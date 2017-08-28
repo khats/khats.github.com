@@ -46,7 +46,7 @@
           console.log(element.id);
           auth2.attachClickHandler(element, {},
               function(googleUser) {
-              googleUser.grant(new gapi.auth2.SigninOptionsBuilder(
+                  auth2.currentUser.get().grant(new gapi.auth2.SigninOptionsBuilder(
                   {'scope': 'profile https://www.googleapis.com/auth/plus.login'})).then( function(success){
                       console.log(JSON.stringify({message: "success", value: success}));
                   },
