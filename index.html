@@ -12,7 +12,8 @@
                   client_id: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
                   cookiepolicy: 'single_host_origin',
                   // Request scopes in addition to 'profile' and 'email'
-                  //scope: 'additional_scope'
+                  scope: new gapi.auth2.SigninOptionsBuilder(
+                  {'scope': 'https://www.googleapis.com/auth/plus.login'})
               });
 
               attachSignin(document.getElementById('customBtn'));
