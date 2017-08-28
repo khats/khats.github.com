@@ -18,14 +18,16 @@
               attachSignin(document.getElementById('customBtn'));
 
               auth2.isSignedIn.listen(function(val){
+                  console.log('listener isSignedIn', val);
                   document.getElementById('sign-in-status').textContent = val;
                   if(auth2.isSignedIn.get() == true){
-                      auth2.currentUser.get().getAuthResponse().id_token
+                      console.log('listener isSignedIn, already signined, token:', auth2.currentUser.get().getAuthResponse().id_token);
                   }
               });
 
               // Sign in the user if they are currently signed in.
               if (auth2.isSignedIn.get() == true) {
+                  console.log('hot start sign in');
                   auth2.signIn();
               }
 
