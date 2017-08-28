@@ -26,17 +26,11 @@
                   auth2.signIn();
               }
 
-
-              auth2.attachClickHandler(document.getElementById('google-logout'), {},
-                  function(){
-                      auth2.signOut().then(function(){
-                          console.log('sign out');
-                      });
-                  }, function(error) {
-                      alert(JSON.stringify(error, undefined, 2));
-                  }
-
-              );
+              document.getElementById('google-logout').onclick = function(){
+                  auth2.signOut().then(function(){
+                      console.log('sign out');
+                  });
+              }
           });
       };
 
