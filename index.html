@@ -11,9 +11,8 @@
               gapi.client.init({
                   clientId: '474337288501-i7fvto28sctjqbk1cqslqfamhtp5s6fv.apps.googleusercontent.com',
                   cookiepolicy: 'single_host_origin',
-                  discoveryDocs: ["https://people.googleapis.com/$discovery/rest"],
                   // Request scopes in addition to 'profile' and 'email'
-                  scope: 'profile email'})// https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me
+                  scope: 'profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me'})
                   .then(function(){
                       var auth2 = gapi.auth2.getAuthInstance();
                       attachSignin(auth2, document.getElementById('customBtn'));
@@ -21,17 +20,17 @@
                       auth2.isSignedIn.listen(function(val){
                           console.log('listener isSignedIn', val);
                           document.getElementById('sign-in-status').textContent = val;
-                          /*if(auth2.isSignedIn.get() == true){
+                          if(auth2.isSignedIn.get() == true){
                               console.log('listener isSignedIn, already signined, token:', auth2.currentUser.get().getAuthResponse().id_token);
-                              gapi.client.people.people.get({
-                                  'resourceName': 'people/me',
-                                  'requestMask.includeField': 'person.names'
-                              }).then(function(response) {
-                                  console.log('Hello, ' + response.result.names[0].givenName);
-                              }, function(reason) {
-                                  console.log('Error: ' + reason.result.error.message);
+                              gapi.client.load('plus','v1', function(){
+                                  var request = gapi.client.plus.people.get({
+                                      'userId': 'me'
+                                  });
+                                  request.execute(function(resp) {
+                                      console.log('Retrieved profile for:' + JSON.stringify(resp));
+                                  });
                               });
-                          }*/
+                          }
                       });
                       auth2.currentUser.listen(function(user){
                           console.log('user changed', user.getId());
@@ -40,6 +39,14 @@
                       // Sign in the user if they are currently signed in.
                       if (gapi.auth2.getAuthInstance().isSignedIn.get() == true) {
                           console.log('hot start sign in');
+                          gapi.client.load('plus','v1', function(){
+                              var request = gapi.client.plus.people.get({
+                                  'userId': 'me'
+                              });
+                              request.execute(function(resp) {
+                                  console.log('Retrieved profile for:' + JSON.stringify(resp));
+                              });
+                          });
                           /*auth2.signIn();*/
                       }
 
@@ -59,13 +66,6 @@
           console.log(element.id);
           auth2.attachClickHandler(element, {},
               function(googleUser) {
-                  /*auth2.currentUser.get().grant(new gapi.auth2.SigninOptionsBuilder(
-                  {'scope': 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me'})).then( function(success){
-                      console.log(JSON.stringify({message: "success", value: success}));
-                  },
-                  function(fail){
-                      alert(JSON.stringify({message: "fail", value: fail}));
-                  });*/
                   document.getElementById('name').innerText = "Signed in: " +
                       googleUser.getBasicProfile().getName();
               }, function(error) {
