@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.module.css"],"names":[],"mappings":"AAAA,oBACI,gBACJ,CACA,mBACI,YACJ,CALA,oBACI,qBAAuB,CACvB,cAAe,CACf,eAAgB,CAChB,WAAY,CACZ,oBACJ,CACA,oBACI,kBACJ,CACA,oBACI,eACJ,CACA,oBACI,cACJ,CAfA,4BACI,SACJ","file":"main.1719db70.chunk.css","sourcesContent":[".makeDecision{\r\n    color: red;\r\n}\r\n"]}
